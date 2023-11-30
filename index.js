@@ -114,15 +114,19 @@ btn.forEach((item) => {
       createGrid(allImgs.length);
       createCards(allImgs);
     } else if (e.target.innerText === 'EASY') {
-      allImgs = [];
-      if (allImgs.length <= 0) {
+      // allImgs = [];
+
+      if (allImgs.length === 0 || allImgs.length > 4) {
+        reset();
         createArr(2);
         createGrid(allImgs.length);
         createCards(allImgs);
       }
     } else if (e.target.innerText === 'NORMAL') {
-      allImgs = [];
-      if (allImgs.length <= 0) {
+      // allImgs = [];
+
+      if (allImgs.length === 0 || allImgs.length < 8) {
+        reset();
         createArr(4);
         createGrid(allImgs.length);
         createCards(allImgs);
