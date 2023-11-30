@@ -138,3 +138,5 @@ function reset() {
     cards.forEach((item) => item.remove());
   }
 }
+
+console.log(a);
