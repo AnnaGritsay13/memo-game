@@ -1,0 +1,70 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: rgb(55, 104, 104);
+}
+.conteiner {
+  margin: 60px auto;
+  width: fit-content;
+  height: fit-content;
+}
+.wrap {
+  width: fit-content;
+  height: fit-content;
+  display: grid;
+  gap: 2vmin;
+}
+.my-btn {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.cards {
+  width: 100%;
+  height: 100%;
+}
+.card {
+  background-color: rgb(55, 104, 104);
+  border: none;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  perspective: 1000px;
+  cursor: pointer;
+}
+.front,
+.back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 1s;
+  backface-visibility: hidden;
+  border-radius: 10px;
+}
+.front {
+  background-image: url(img/bg.jpg);
+  background-repeat: round;
+}
+.back {
+  transform: rotateY(180deg);
+}
+.back img {
+  width: 100%;
+  height: 100%;
+}
+.front__rotate {
+  transform: rotateY(180deg);
+}
+.back__rotate {
+  transform: rotateY(360deg);
+}
+.no-click {
+  pointer-events: none;
+}
