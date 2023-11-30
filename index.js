@@ -5,51 +5,64 @@ const game = document.querySelector('.wrap'),
     'img/luna&sunny.jpg',
     'img/sunny.jpg',
   ],
-  allImgs = Array.prototype.concat(imgs, imgs),
-  btn = document.querySelector('.my-btn');
+  btn = document.querySelectorAll('.my-btn');
 
-let sortAllImg = allImgs.sort(() => (Math.random() > 0.5 ? 2 : -1)),
+let allImgs = [],
   x = 2,
-  y = 2,
-  length = sortAllImg.length;
+  y = 2;
 
-if (length <= 4) {
-  game.setAttribute(
-    'style',
-    `grid-template-columns: repeat(${x}, 20vmin); grid-template-rows: repeat(${y}, 25vmin)`
-  );
-} else if (length > 4 && window.screen.width <= 650) {
-  game.setAttribute(
-    'style',
-    `grid-template-columns: repeat(${2}, 25vmin); grid-template-rows: repeat(${
-      length / x
-    }, 30vmin)`
-  );
-} else {
-  game.setAttribute(
-    'style',
-    `grid-template-columns: repeat(${
-      x * 2
-    }, 20vmin); grid-template-rows: repeat(${length / (x * 2)}, 25vmin)`
-  );
+function createArr(n) {
+  for (let i = 0; n > i; i++) {
+    allImgs.push(imgs[i], imgs[i]);
+  }
+  allImgs.sort(() => (Math.random() > 0.5 ? 2 : -1));
 }
 
-for (let i = 0; i < allImgs.length; i++) {
-  let box = document.createElement('div');
-  box.classList.add('cards');
+function createCards(arr) {
+  arr.forEach((item) => {
+    let box = document.createElement('div');
+    box.classList.add('cards');
+    box.innerHTML = `
+       <div class="card" data-id="${item}}">
+          <div class="front"></div>
+          <div class="back" >
+            <img src="${item}" alt="#" />
+          </div>
+       </div>
+  `;
+    game.appendChild(box);
+  });
 
-  box.innerHTML = `
-     <div class="card" data-id="${sortAllImg[i]}">
-        <div class="front"></div>
-        <div class="back" >
-          <img src="${sortAllImg[i]}" alt="#" />
-        </div>
-     </div>
-`;
-  game.appendChild(box);
+  const cards = document.querySelectorAll('.card');
+
+  cards.forEach((card) => {
+    card.addEventListener('click', onClick);
+  });
 }
 
-const cards = document.querySelectorAll('.card');
+function createGrid(length) {
+  if (length <= 4) {
+    game.setAttribute(
+      'style',
+      `grid-template-columns: repeat(${x}, 20vmin); grid-template-rows: repeat(${y}, 25vmin)`
+    );
+  } else if (length > 4 && window.screen.width <= 650) {
+    game.setAttribute(
+      'style',
+      `grid-template-columns: repeat(${2}, 25vmin); grid-template-rows: repeat(${
+        length / x
+      }, 30vmin)`
+    );
+  } else {
+    game.setAttribute(
+      'style',
+      `grid-template-columns: repeat(${
+        x * 2
+      }, 20vmin); grid-template-rows: repeat(${length / (x * 2)}, 25vmin)`
+    );
+  }
+}
+
 let arr = [],
   a = [];
 
@@ -92,16 +105,36 @@ function onClick(e) {
   }
 }
 
-btn.addEventListener('click', closeCard);
-
-function closeCard() {
-  cards.forEach((card) => {
-    card.firstElementChild.classList.remove('front__rotate');
-    card.lastElementChild.classList.remove('back__rotate');
-    card.classList.remove('no-click');
+btn.forEach((item) => {
+  item.addEventListener('click', (e) => {
+    if (e.target.innerText === 'RESET') {
+      let count = allImgs.length;
+      reset();
+      createArr(count / 2);
+      createGrid(allImgs.length);
+      createCards(allImgs);
+    } else if (e.target.innerText === 'EASY') {
+      allImgs = [];
+      if (allImgs.length <= 0) {
+        createArr(2);
+        createGrid(allImgs.length);
+        createCards(allImgs);
+      }
+    } else if (e.target.innerText === 'NORMAL') {
+      allImgs = [];
+      if (allImgs.length <= 0) {
+        createArr(4);
+        createGrid(allImgs.length);
+        createCards(allImgs);
+      }
+    }
   });
-}
-
-cards.forEach((card) => {
-  card.addEventListener('click', onClick);
 });
+
+function reset() {
+  if (allImgs.length > 0) {
+    allImgs = [];
+    let cards = document.querySelectorAll('.cards');
+    cards.forEach((item) => item.remove());
+  }
+}
