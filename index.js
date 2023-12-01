@@ -179,7 +179,3 @@ function clearTimer() {
   (milseconds = 0), (seconds = 0), (minutes = 0);
   timer.textContent = '00:00:00';
 }
-
-// startBtn.addEventListener('click', () => {
-//   interval = setInterval(updateTime, 1000);
-// });
