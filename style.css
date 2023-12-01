@@ -75,3 +75,20 @@ body {
 .no-click {
   pointer-events: none;
 }
+
+.myTimer {
+  width: fit-content;
+  height: fit-content;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  margin: 10px auto;
+}
+
+#timer {
+  cursor: default;
+  color: #fff;
+  font-weight: 300;
+  font-size: 24px;
+  margin: 0;
+  padding: 4px;
+}

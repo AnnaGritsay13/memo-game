@@ -85,7 +85,11 @@ function onClick(e) {
     } else if (arr[0] !== arr[1]) {
       game.classList.add('no-click');
 
-      firstCard.forEach((item) => item.classList.remove('no-click'));
+      firstCard.forEach((item) => {
+        item.addEventListener('click', timer);
+        item.classList.remove('no-click');
+      });
+
       card.classList.remove('no-click');
 
       setTimeout(() => {
@@ -113,23 +117,28 @@ btn.forEach((item) => {
       createArr(count / 2);
       createGrid(allImgs.length);
       createCards(allImgs);
+      clearInterval(interval);
+      clearTimer();
+      interval = setInterval(updateTime, 100);
     } else if (e.target.innerText === 'EASY') {
-      // allImgs = [];
-
       if (allImgs.length === 0 || allImgs.length > 4) {
         reset();
         createArr(2);
         createGrid(allImgs.length);
         createCards(allImgs);
+        clearInterval(interval);
+        clearTimer();
+        interval = setInterval(updateTime, 100);
       }
     } else if (e.target.innerText === 'NORMAL') {
-      // allImgs = [];
-
       if (allImgs.length === 0 || allImgs.length < 8) {
         reset();
         createArr(4);
         createGrid(allImgs.length);
         createCards(allImgs);
+        clearInterval(interval);
+        clearTimer();
+        interval = setInterval(updateTime, 100);
       }
     }
   });
@@ -143,4 +152,34 @@ function reset() {
   }
 }
 
-console.log(a);
+//timer
+let timer = document.getElementById('timer');
+
+let milseconds = 0,
+  seconds = 0,
+  minutes = 0,
+  interval;
+
+function updateTime() {
+  milseconds++;
+  if (milseconds === 60) {
+    seconds++;
+    milseconds = 0;
+  }
+  if (seconds === 60) {
+    minutes++;
+    seconds = 0;
+  }
+  timer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds
+    .toString()
+    .padStart(2, '0')}:${milseconds.toString().padStart(2, '0')}`;
+}
+
+function clearTimer() {
+  (milseconds = 0), (seconds = 0), (minutes = 0);
+  timer.textContent = '00:00:00';
+}
+
+// startBtn.addEventListener('click', () => {
+//   interval = setInterval(updateTime, 1000);
+// });
